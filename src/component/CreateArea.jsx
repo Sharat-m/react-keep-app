@@ -3,29 +3,32 @@ import React, { useState } from "react";
 function CreateArea(props) {
   const [note, setNote] = useState({
     title: "",
-    content: "",
+    content: ""
   });
 
   function handleChange(event) {
-    const { name, value } = event.target; //destructuring the event
-    setNote((prevNote) => {
+    const { name, value } = event.target;
+
+    setNote(prevNote => {
       return {
         ...prevNote,
-        [name]: value,
+        [name]: value
       };
     });
   }
 
-  // when add button is clicked this function is triggerd
-  function handleClick(event) {
+  function submitNote(event) {
     props.onAdd(note);
-    setNote({ title: "", content: "" });
-    event.preventDefault(); //to avoid the hole page of refershing, we have to use preventDefault function
+    setNote({
+      title: "",
+      content: ""
+    });
+    event.preventDefault();
   }
 
   return (
     <div>
-      <form>
+      <form className="create-note">
         <input
           name="title"
           onChange={handleChange}
@@ -33,13 +36,13 @@ function CreateArea(props) {
           placeholder="Title"
         />
         <textarea
+          name="content"
           onChange={handleChange}
           value={note.content}
-          name="content"
           placeholder="Take a note..."
           rows="3"
         />
-        <button onClick={handleClick}>Add</button>
+        <button onClick={submitNote}>Add</button>
       </form>
     </div>
   );
